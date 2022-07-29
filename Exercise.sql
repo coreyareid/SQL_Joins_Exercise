@@ -1,28 +1,30 @@
 -- Second SQL Exercise
 /* joins: select all the computers from the products table:
 using the products table and the categories table, return the product name and the category name */
- SELECT P.Name AS 'Product', C.Name AS 'Category'
- FROM Products AS P
- INNER JOIN Categories AS C ON C.CategoryID = P.CategoryID
- WHERE C.Name = 'Computers';
+SELECT Products.Name AS 'Product',  Categories.Name AS 'Category'
+FROM Products
+JOIN Categories ON Products.ProductID = Categories.CategoryID;
 /* joins: find all product names, product prices, and products ratings that have a rating of 5 */
- SELECT P.Name, P.Price, R.Rating 
- FROM Products AS P
- INNER JOIN Reviews AS R ON R.ProductID = P.ProductID
- WHERE R.Rating = '5'
+ SELECT Products.Name, Products.Price, Reviews.Rating 
+ FROM Products 
+ INNER JOIN Reviews 
+ ON Reviews.ProductID = Products.ProductID
+ WHERE Reviews.Rating = '5'
  ORDER BY Price ASC;
  /* joins: find the employee with the most total quantity sold.  use the sum() function and group by */
-SELECT E.FirstName, SUM(S.Quantity) AS Total
-FROM Sales AS S
-INNER JOIN employees AS E ON E.EmployeeID = S.EmployeeID
-GROUP BY E.EmployeeID
+SELECT Employees.FirstName, SUM(Sales.Quantity) AS Total
+FROM Sales
+INNER JOIN employees
+ON Employees.EmployeeID = Sales.EmployeeID
+GROUP BY Employees.EmployeeID
 ORDER BY Total ASC;
 
 /* joins: find the name of the department, and the name of the category for Appliances and Games */
-SELECT D.Name AS 'Department', C.Name AS 'Category'
-FROM Departments AS D
-INNER JOIN Categories AS C ON C.DepartmentID = D.DepartmentID
-WHERE C.Name = 'Appliances' OR C.Name = 'Games';
+SELECT Departments.Name AS 'Department', Categories.Name AS 'Category'
+FROM Departments
+LEFT JOIN Categories
+ ON Categories.DepartmentID = Departments.DepartmentID
+WHERE Categories.Name = 'Appliances' OR Categories.Name = 'Games';
 
 /* joins: find the product name, total # sold, and total price sold,
  for Eagles: Hotel California --You may need to use SUM() */
